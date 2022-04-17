@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public delegate void PlayerShot();
+    public static event PlayerShot OnSpace;
 
-    // Update is called once per frame
-    void Update()
+    public static void RunSpace()
     {
-        
+        print("Shot Fired");
+        OnSpace();
     }
 }
