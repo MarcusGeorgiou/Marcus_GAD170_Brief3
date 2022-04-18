@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
         StartCoroutine(BulletTimer(1f));
     }
 
+    // Delay player shooting to only occur at least once every second
     IEnumerator BulletTimer(float delay)
     {
         yield return new WaitForSeconds(delay);
