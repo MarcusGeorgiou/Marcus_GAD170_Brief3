@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Invader : MonoBehaviour
 {
-    public GameObject enemy;
+    bool canMove = true;
+    public float moveSpeed = 1f;
 
     void OnEnable()
     {
-        EventManager.OnDead += Death;
+        
     }
 
     // Start is called before the first frame update
@@ -20,16 +21,35 @@ public class Invader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(canMove)
+        {
+            this.transform.position += Vector3.right * moveSpeed;
+            canMove = false;
+
+            MoveTimer(1f);
+        }
     }
 
     void Death()
     {
-        Destroy(enemy);
+        // Kill the invader
+        print("Invader Killed");
+        Destroy(this.gameObject);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    // Collision tests
+    void OnCollisionEnter2D(Collision2D collisionData)
     {
-        EventManager.RunDead();
+        // Only continue if colliding with a player bullet
+        if(collisionData.gameObject.GetComponent<PlayerBullet>() != null)
+        {
+            Death();
+        }
+    }
+
+    IEnumerator MoveTimer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canMove = true;
     }
 }

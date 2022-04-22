@@ -463,6 +463,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5183855500754984836, guid: d8b5030f61c6b6540ba3d567b2664b05, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 2230026962783992731, guid: 2c05bcb37a8eb4b409d326d7c43fc3f0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b5030f61c6b6540ba3d567b2664b05, type: 3}
 --- !u!1001 &137641593
@@ -700,6 +704,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4066537737027622258, guid: 5a207cdda04458e41bb1189c860fef1b, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 2230026962783992731, guid: 2c05bcb37a8eb4b409d326d7c43fc3f0, type: 3}
     - target: {fileID: 7495260756847302364, guid: 5a207cdda04458e41bb1189c860fef1b, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -871,6 +879,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4514889625009123227, guid: b027ec006e18fe34d8dca6dd3eb0419f, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 2230026962783992731, guid: 2c05bcb37a8eb4b409d326d7c43fc3f0, type: 3}
     - target: {fileID: 7981400286470892597, guid: b027ec006e18fe34d8dca6dd3eb0419f, type: 3}
       propertyPath: m_RootOrder
       value: 3

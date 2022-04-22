@@ -5,11 +5,10 @@ using UnityEngine;
 public class PlayerBullet : MonoBehaviour
 {
     public float speed = 5;
-    public GameObject playerShot;
 
     void OnEnable()
     {
-        EventManager.OnDead += Destroy;
+        
     }
 
     // Start is called before the first frame update
@@ -25,12 +24,22 @@ public class PlayerBullet : MonoBehaviour
         this.transform.position += Vector3.up * Time.deltaTime * speed;
         if(this.transform.position.y >= 6.5)
         {
-            Destroy();
+            DestroyBullet();
         }
     }
 
-    void Destroy()
+    void DestroyBullet()
     {
-        Destroy(playerShot);
+        Destroy(this.gameObject);
+    }
+
+    // Collision tests
+    void OnCollisionEnter2D(Collision2D collisionData)
+    {
+        // Only continue if colliding with an invader
+        if(collisionData.gameObject.GetComponent<Invader>() != null)
+        {
+            DestroyBullet();
+        }
     }
 }

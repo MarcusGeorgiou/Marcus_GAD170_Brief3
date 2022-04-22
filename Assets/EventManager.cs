@@ -14,16 +14,6 @@ public class EventManager : MonoBehaviour
         OnSpace();
     }
 
-    // When invaders are shot, destroy bullet and invader
-    public delegate void InvaderDeath();
-    public static event InvaderDeath OnDead;
-
-    public static void RunDead()
-    {
-        print("Invader Killed");
-        OnDead();
-    }
-
     // When player is shot, momentarily pause invaders
     // Reduce lives by one
     // Play death animation
