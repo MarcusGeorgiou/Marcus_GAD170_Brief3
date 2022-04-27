@@ -5,17 +5,25 @@ using UnityEngine;
 public class Invader : MonoBehaviour
 {
     bool canMove = true;
-    public float moveSpeed = 1f;
+    float moveSpeed = 1f;
+    float moveDelay = 1f;
+
+    GameManager myManager;
 
     void OnEnable()
     {
-        
+        EventManager.OnChange += ReachedEnd;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnChange -= ReachedEnd;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        myManager = GameObject.FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -26,7 +34,13 @@ public class Invader : MonoBehaviour
             this.transform.position += Vector3.right * moveSpeed;
             canMove = false;
 
-            MoveTimer(1f);
+            StartCoroutine(MoveTimer(moveDelay));
+        }
+
+        if (this.transform.position.x > 14f || this.transform.position.x < -14f)
+        {
+            //Call to GameManager to chnge direction
+            myManager.ChangeDirection();
         }
     }
 
@@ -35,6 +49,14 @@ public class Invader : MonoBehaviour
         // Kill the invader
         print("Invader Killed");
         Destroy(this.gameObject);
+    }
+
+    void ReachedEnd()
+    {
+        // Move invader down, change direction and decrease movement delay
+        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 1, this.transform.position.z);
+        moveSpeed *= -1f;
+        moveDelay *= 0.9f;
     }
 
     // Collision tests

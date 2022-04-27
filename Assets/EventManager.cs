@@ -14,6 +14,15 @@ public class EventManager : MonoBehaviour
         OnSpace();
     }
 
+    // When invaders reach border, change direction
+    public delegate void DirectionChange();
+    public static event DirectionChange OnChange;
+
+    public static void RunChange()
+    {
+            OnChange();
+    }
+
     // When player is shot, momentarily pause invaders
     // Reduce lives by one
     // Play death animation
