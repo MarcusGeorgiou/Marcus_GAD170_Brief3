@@ -10,18 +10,21 @@ public class UIManager : MonoBehaviour
 
     public Text scoreText;
     public Text livesText;
+    public Text gameEnd;
 
     private void OnEnable()
     {
         EventManager.AddScore += AddPoints;
 
         EventManager.OnDeath += MinusLives;
+
+        EventManager.ShowScore += GameOver;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameEnd.text = null;
     }
 
     // Update is called once per frame
@@ -47,5 +50,10 @@ public class UIManager : MonoBehaviour
     {
         lives--;
         print("Lives: " + lives);
+    }
+
+    void GameOver()
+    {
+        gameEnd.text = "GAME OVER";
     }
 }

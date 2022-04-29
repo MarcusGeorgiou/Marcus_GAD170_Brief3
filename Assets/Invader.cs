@@ -15,6 +15,8 @@ public class Invader : MonoBehaviour
     float shoot;
     bool dontShoot = false;
 
+    int killed = 0;
+
     void OnEnable()
     {
         EventManager.OnChange += ReachedEnd;
@@ -44,7 +46,7 @@ public class Invader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            if (canMove)
+            if(canMove)
             {
                 this.transform.position += Vector3.right * moveSpeed;
                 canMove = false;
@@ -52,7 +54,7 @@ public class Invader : MonoBehaviour
                 StartCoroutine(MoveTimer(moveDelay));
             }
 
-            if (this.transform.position.x > 14f || this.transform.position.x < -14f)
+            if(this.transform.position.x > 14f || this.transform.position.x < -14f)
             {
                 //Call to GameManager to chnge direction
                 myManager.ChangeDirection();
@@ -63,11 +65,16 @@ public class Invader : MonoBehaviour
                 shoot = Random.Range(0, 1500);
                 if (canShoot && shoot == 2)
                 {
-                canShoot = false;
-                Instantiate(bulletPrefab, transform.position, transform.rotation);
+                    canShoot = false;
+                    Instantiate(bulletPrefab, transform.position, transform.rotation);
 
-                StartCoroutine(ShotTimer(Random.Range(1f, 15f)));
+                    StartCoroutine(ShotTimer(Random.Range(1f, 15f)));
                 }
+            }
+
+            if(killed == 55)
+            {
+                EventManager.RunGameEnd();
             }
     }
 
@@ -76,6 +83,7 @@ public class Invader : MonoBehaviour
         // Kill the invader
         print("Invader Killed");
         Destroy(this.gameObject);
+        KillCount();
     }
 
     void PlayerDead()
@@ -91,6 +99,11 @@ public class Invader : MonoBehaviour
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 1, this.transform.position.z);
         moveSpeed *= -1f;
         moveDelay *= 0.9f;
+    }
+
+    void KillCount()
+    {
+        killed++;
     }
 
     // Collision tests
