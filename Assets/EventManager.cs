@@ -20,11 +20,39 @@ public class EventManager : MonoBehaviour
 
     public static void RunChange()
     {
-            OnChange();
+        OnChange();
     }
 
     // When player is shot, momentarily pause invaders
+    // Destroy all bullets
     // Reduce lives by one
     // Play death animation
     // Spawn new player ship
+    public delegate void PlayerDeath();
+    public static event PlayerDeath OnDeath;
+
+    public static void RunDeath()
+    {
+        print("Player lost a life");
+        OnDeath();
+    }
+
+    // Invader Dies, add to score
+    public delegate void Score();
+    public static event Score AddScore;
+
+    public static void RunScore()
+    {
+        print("Score +10");
+        AddScore();
+    }
+
+    // Game Over
+    public delegate void GameOver();
+    public static event GameOver ShowScore;
+
+    public static void RunGameEnd()
+    {
+        ShowScore();
+    }
 }

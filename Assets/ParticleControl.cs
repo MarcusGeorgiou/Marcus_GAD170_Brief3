@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ParticleControl : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public ParticleSystem Ded;
+
+    void OnEnable()
     {
-        
+        EventManager.OnDeath += PlayDeath;
     }
 
-    // Update is called once per frame
-    void Update()
+    void PlayDeath()
     {
-        
+        Ded.Play();
     }
 }

@@ -10,11 +10,17 @@ public class Player : MonoBehaviour
 
     public GameObject bulletPrefab;
     private bool canShoot = true;
+    private bool isDead = false;
+    private bool dontShoot = false;
 
     // OnEnable is called before any other initiating functions
     void OnEnable()
     {
         EventManager.OnSpace += Firing;
+
+        EventManager.OnDeath += LoseLife;
+
+        EventManager.ShowScore += LoseLife;
     }
 
     // Start is called before the first frame update
@@ -31,7 +37,7 @@ public class Player : MonoBehaviour
         this.transform.position = new
         Vector3(curPos, this.transform.position.y, this.transform.position.z);
 
-        if(canShoot == true)
+        if(canShoot && dontShoot == false)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -47,10 +53,41 @@ public class Player : MonoBehaviour
         StartCoroutine(BulletTimer(1f));
     }
 
+    void LoseLife()
+    {
+        // Kill the player
+        isDead = true;
+        dontShoot = true;
+        GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
+        GetComponent<BoxCollider2D>().enabled = !GetComponent<BoxCollider2D>().enabled;
+
+        StartCoroutine(DeathTimer(4f));
+    }
+
+    // Collision tests
+    void OnCollisionEnter2D(Collision2D collisionData)
+    {
+        // Only continue if colliding with an invader bullet
+        if (collisionData.gameObject.GetComponent<InvaderBullet>() != null)
+        {
+            EventManager.RunDeath();
+        }
+    }
+
     // Delay player shooting to only occur at least once every second
     IEnumerator BulletTimer(float delay)
     {
         yield return new WaitForSeconds(delay);
         canShoot = true;
+    }
+
+    IEnumerator DeathTimer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
+        GetComponent<BoxCollider2D>().enabled = !GetComponent<BoxCollider2D>().enabled;
+        isDead = false;
+        dontShoot = false;
     }
 }

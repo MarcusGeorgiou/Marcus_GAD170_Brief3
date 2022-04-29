@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-    public float speed = 5;
+    float speed = 5;
 
     void OnEnable()
     {
-        
+        EventManager.OnDeath += DestroyBullet;
+
+        EventManager.ShowScore += DestroyBullet;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnDeath -= DestroyBullet;
+
+        EventManager.ShowScore -= DestroyBullet;
     }
 
     // Start is called before the first frame update
